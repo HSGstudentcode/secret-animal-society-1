@@ -261,7 +261,7 @@
             background-color: #fff5f7; /* Very light pink/white for hover based on new primary */
         }
 
-        /* S4, S8, S9, S11: Questionnaire Forms */
+        /* S4, S8, S9, S11, S17, S18: Questionnaire Forms */
         .form-group {
             margin-bottom: 20px;
         }
@@ -278,6 +278,7 @@
         .form-group input[type="email"],
         .form-group input[type="tel"],
         .form-group input[type="number"],
+        .form-group input[type="date"], /* ADDED DATE HERE */
         .form-group select,
         .form-group textarea { /* ADDED TEXTAREA HERE */
             width: 100%;
@@ -293,6 +294,7 @@
         .form-group input[type="email"]:focus,
         .form-group input[type="tel"]:focus,
         .form-group input[type="number"]:focus,
+        .form-group input[type="date"]:focus, /* ADDED DATE HERE */
         .form-group select:focus,
         .form-group textarea:focus { /* ADDED TEXTAREA HERE */
             border-color: var(--secondary-color); /* Purple focus border */
@@ -802,17 +804,19 @@
             </div>
         </div>
 
-        <!-- S10: Lost & Found Menu (Placeholder) -->
+        <!-- S10: Lost & Found Menu -->
         <div id="screen-lost-found" class="screen">
             <h2 style="color: var(--secondary-color);">Lost & Found</h2>
             <p>We can help you search for a missing pet or report an animal you've found.</p>
 
-            <div class="help-section adopt-button" onclick="alertPlaceholder('Lost Pet Report')">
+            <!-- UPDATED TO LINK TO LOST REPORT FORM (S17) -->
+            <div class="help-section adopt-button" onclick="showScreen('screen-report-lost')">
                 <h3 style="color: var(--secondary-color);">I've Lost My Pet 😢➡️</h3>
                 <p>File a report to search our database of found animals.</p>
             </div>
 
-            <div class="help-section adopt-button" onclick="alertPlaceholder('Found Animal Report')">
+            <!-- UPDATED TO LINK TO FOUND REPORT FORM (S18) -->
+            <div class="help-section adopt-button" onclick="showScreen('screen-report-found')">
                 <h3 style="color: var(--secondary-color);">I've Found an Animal 🔎➡️</h3>
                 <p>Report an animal you've captured or located in the neighborhood.</p>
             </div>
@@ -836,7 +840,7 @@
             </div>
         </div>
 
-        <!-- S11: Report Animal Cruelty Form (NEW FOCUSED SCREEN) -->
+        <!-- S11: Report Animal Cruelty Form -->
         <div id="screen-cruelty-report" class="screen">
             <h2 style="color: var(--secondary-color); margin-top: 0;">Urgent: Report Animal Cruelty</h2>
             <p>Your report is critical. Please provide accurate details. Your contact information is optional for anonymity but highly encouraged for follow-up.</p>
@@ -1029,6 +1033,133 @@
             </div>
         </div>
 
+        <!-- S17: Lost Pet Report Form -->
+        <div id="screen-report-lost" class="screen">
+            <h2 style="color: var(--secondary-color); margin-top: 0;">Report Your Lost Pet</h2>
+            <p>We will cross-reference your pet's description with animals reported found in your area. Please be accurate!</p>
+            <form id="lost-pet-form">
+
+                <!-- Pet Details -->
+                <div class="form-group">
+                    <label>Type of Pet Lost *</label>
+                    <div class="selection-group">
+                        <label class="selection-label"><input type="radio" name="lost_type" value="Dog" required><span>Dog</span></label>
+                        <label class="selection-label"><input type="radio" name="lost_type" value="Cat"><span>Cat</span></label>
+                        <label class="selection-label"><input type="radio" name="lost_type" value="Other"><span>Other (Bird, Rabbit, etc.)</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pet_name">Pet's Name *</label>
+                    <input type="text" id="pet_name" name="pet_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pet_description">Description (Color, markings, size, collar info) *</label>
+                    <textarea id="pet_description" name="pet_description" rows="3" required></textarea>
+                </div>
+               
+                <!-- Location & Date Lost -->
+                <div class="form-group">
+                    <label for="date_lost">Date Lost *</label>
+                    <input type="date" id="date_lost" name="date_lost" required>
+                </div>
+               
+                <div class="form-group">
+                    <label for="location_lost">Last Seen Location (Address or Cross-streets) *</label>
+                    <input type="text" id="location_lost" name="location_lost" required>
+                </div>
+
+                <!-- Owner Contact Info -->
+                <div class="form-group">
+                    <label for="owner_phone">Owner Contact Phone *</label>
+                    <input type="tel" id="owner_phone" name="owner_phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="owner_email">Owner Contact Email</label>
+                    <input type="email" id="owner_email" name="owner_email">
+                </div>
+
+                <button type="submit" class="submit-button">Submit Lost Pet Report</button>
+            </form>
+
+            <!-- NAVIGATION BUTTON -->
+            <div style="text-align: center; margin-top: 30px; margin-bottom: 10px;">
+                <button class="submit-button"
+                        style="background-color: #E6E0FF; color: var(--secondary-color); border: 2px solid var(--secondary-color); width: 80%;"
+                        onclick="showScreen('screen-lost-found')">
+                    <i class="fas fa-arrow-left"></i> Back to Lost & Found
+                </button>
+            </div>
+        </div>
+
+        <!-- S18: Found Animal Report Form -->
+        <div id="screen-report-found" class="screen">
+            <h2 style="color: var(--secondary-color); margin-top: 0;">Report Found Animal</h2>
+            <p>Thank you for helping! We need details to quickly reunite this animal with its owner.</p>
+            <form id="found-animal-form">
+
+                <!-- Animal Details -->
+                <div class="form-group">
+                    <label>Type of Animal Found *</label>
+                    <div class="selection-group">
+                        <label class="selection-label"><input type="radio" name="found_type" value="Dog" required><span>Dog</span></label>
+                        <label class="selection-label"><input type="radio" name="found_type" value="Cat"><span>Cat</span></label>
+                        <label class="selection-label"><input type="radio" name="found_type" value="Other Pet"><span>Other Pet (Bird, Rabbit, etc.)</span></label>
+                        <label class="selection-label"><input type="radio" name="found_type" value="Wildlife"><span>Wildlife (Call first!)</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="animal_description">Detailed Description (Color, estimated size/age, collar/tag info) *</label>
+                    <textarea id="animal_description" name="animal_description" rows="4" required></textarea>
+                </div>
+               
+                <!-- Location & Date Found -->
+                <div class="form-group">
+                    <label for="date_found">Date Found *</label>
+                    <input type="date" id="date_found" name="date_found" required>
+                </div>
+               
+                <div class="form-group">
+                    <label for="location_found">Location Found (Address or Cross-streets) *</label>
+                    <input type="text" id="location_found" name="location_found" required>
+                </div>
+
+                <!-- Current Status -->
+                <div class="form-group">
+                    <label for="animal_status">Current Status of Animal *</label>
+                    <select id="animal_status" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="Secured">Secured (In home, garage, etc.)</option>
+                        <option value="Running Loose">Still running loose/seen frequently</option>
+                        <option value="Injured">Injured (Emergency call required)</option>
+                    </select>
+                </div>
+
+                <!-- Finder Contact Info -->
+                <div class="form-group">
+                    <label for="finder_name">Your Name *</label>
+                    <input type="text" id="finder_name" name="finder_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="finder_phone">Your Contact Phone *</label>
+                    <input type="tel" id="finder_phone" name="finder_phone" required>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Found Animal Report</button>
+            </form>
+
+            <!-- NAVIGATION BUTTON -->
+            <div style="text-align: center; margin-top: 30px; margin-bottom: 10px;">
+                <button class="submit-button"
+                        style="background-color: #E6E0FF; color: var(--secondary-color); border: 2px solid var(--secondary-color); width: 80%;"
+                        onclick="showScreen('screen-lost-found')">
+                    <i class="fas fa-arrow-left"></i> Back to Lost & Found
+                </button>
+            </div>
+        </div>
+
 
         <!-- S13: Placeholder Success/Error Modal (Not a full screen, but a modal overlay) -->
         <div id="modal-message" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100;">
@@ -1115,8 +1246,10 @@
                 else if (screenId === 'screen-cruelty-report') setHeader('Report Cruelty');
                 else if (screenId === 'screen-settings') setHeader('Settings');
                 else if (screenId === 'screen-body-language') setHeader('Pet Body Language');
-                else if (screenId === 'screen-find-animal') setHeader('Found Animal Protocol'); // NEW HEADER
-                else if (screenId === 'screen-pet-health') setHeader('Pet Health Guide'); // NEW HEADER
+                else if (screenId === 'screen-find-animal') setHeader('Found Animal Protocol');
+                else if (screenId === 'screen-pet-health') setHeader('Pet Health Guide');
+                else if (screenId === 'screen-report-lost') setHeader('Lost Pet Report'); // NEW HEADER
+                else if (screenId === 'screen-report-found') setHeader('Found Animal Report'); // NEW HEADER
 
                 updateStatus();
             }
@@ -1226,6 +1359,47 @@
                 document.getElementById('reporter_name').value = '';
                 document.getElementById('reporter_email').value = '';
             }
+        });
+
+        // NEW: Lost Pet Report Submission (S17)
+        document.getElementById('lost-pet-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // In a real app, this data would be sent to a database for matching.
+            const petName = document.getElementById('pet_name').value;
+            const location = document.getElementById('location_lost').value;
+
+            // Navigate back to lost-found screen after modal closes
+            showModal('Lost Pet Report Filed!',
+                     `We've registered the report for **${petName}** last seen near **${location}**. We will alert you if a match is found.`,
+                     'screen-lost-found');
+           
+            // Clear form
+            this.reset();
+        });
+
+        // NEW: Found Animal Report Submission (S18)
+        document.getElementById('found-animal-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // In a real app, this data would be sent to a database for matching.
+            const animalType = document.querySelector('input[name="found_type"]:checked').value;
+            const location = document.getElementById('location_found').value;
+            const status = document.getElementById('animal_status').value;
+           
+            let message = `Thank you for reporting a **${animalType}** found near **${location}**.`;
+            if (status === 'Secured') {
+                message += " An outreach volunteer will contact you shortly to coordinate retrieval.";
+            } else if (status === 'Injured') {
+                message = "Thank you. This is an emergency. **Please contact Animal Control immediately** while we review the report.";
+            } else {
+                message += " We will post alerts for the owner immediately.";
+            }
+
+
+            // Navigate back to lost-found screen after modal closes
+            showModal('Found Animal Report Filed!', message, 'screen-lost-found');
+
+            // Clear form
+            this.reset();
         });
 
 
