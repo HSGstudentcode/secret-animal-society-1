@@ -1270,6 +1270,9 @@
 
             // Navigate back to help screen after modal closes
             showModal('Application Submitted!', 'Thank you for submitting your adoption application. A counselor will review your preferences and contact you shortly.', 'screen-help');
+           
+            // RESET FORM AS REQUESTED
+            this.reset();
         });
 
         // Foster Form
@@ -1282,6 +1285,9 @@
             }
             // Navigate back to help screen after modal closes
             showModal('Foster Survey Completed!', 'Thank you for your interest in fostering! We will contact you based on your experience and availability.', 'screen-help');
+           
+            // RESET FORM FOR CLEAN SLATE
+            this.reset();
         });
 
         // Donation Selection
@@ -1353,11 +1359,8 @@
                 // Pass 'screen-menu' so closeModal navigates back
                 showModal(title, submissionMessage, 'screen-menu');
 
-                // Clear mandatory fields after submission
-                locationInput.value = '';
-                descriptionInput.value = '';
-                document.getElementById('reporter_name').value = '';
-                document.getElementById('reporter_email').value = '';
+                // RESET FORM FOR CLEAN SLATE
+                this.reset();
             }
         });
 
